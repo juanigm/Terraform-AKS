@@ -17,6 +17,7 @@ output "aks_node_rg" {
 output "acr_login_server" {
   value = azurerm_container_registry.acr.login_server
 }*/
+
 /*
 resource "local_file" "kubeconfig" {
   depends_on   = [azurerm_kubernetes_cluster.aks]

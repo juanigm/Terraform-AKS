@@ -16,13 +16,13 @@ spec:
         enabled: false
     grafana:
       # Enable Grafana deployment for analytics and monitoring dashboards
-      enabled: ${enableGrafana}
+      enabled: true
       security:
         # Enable authentication for Grafana
         enabled: true
     kiali:
       # Enable the Kiali deployment for a service mesh observability dashboard
-      enabled: ${enableKiali}
+      enabled: true
     tracing:
       # Enable the Jaeger deployment for tracing
-      enabled: ${enableTracing}
+      enabled: true

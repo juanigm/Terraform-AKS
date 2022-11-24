@@ -80,7 +80,18 @@ resource "null_resource" "istio" {
     always_run = "${timestamp()}"
   }
   provisioner "local-exec" {
-    command = "istioctl install --set profile=demo --kubeconfig ~/.kube/config -y"
+    command = "istioctl install --set profile=demo -y"
+    //command = "istioctl manifest apply -f \".istio/istio-aks.yaml\" --kubeconfig ~/.kube/config"
+  }
+  depends_on = [kubernetes_secret.grafana, kubernetes_secret.kiali, local_file.istio-config]
+}
+
+resource "null_resource" "kiali" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+  provisioner "local-exec" {
+    command = "kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.15/samples/addons/kiali.yaml"
     //command = "istioctl manifest apply -f \".istio/istio-aks.yaml\" --kubeconfig ~/.kube/config"
   }
   depends_on = [kubernetes_secret.grafana, kubernetes_secret.kiali, local_file.istio-config]
