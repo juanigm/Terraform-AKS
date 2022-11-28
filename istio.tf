@@ -1,16 +1,10 @@
-resource "random_password" "password" {
-  length           = 16
-  special          = true
-  override_special = "_%@"
-}
-
-data "azurerm_subscription" "current" {
-}
-
 resource "local_file" "kube_config" {
-  content    = azurerm_kubernetes_cluster.aks.kube_admin_config_raw
+  depends_on   = [azurerm_kubernetes_cluster.aks]
+  content    = azurerm_kubernetes_cluster.aks.kube_config_raw
   filename   = ".kube/config"   
 }
+
+
 
 
 resource "null_resource" "set-kube-config" {
@@ -25,11 +19,66 @@ resource "null_resource" "set-kube-config" {
 }
 
 
+
+resource "null_resource" "istio" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+  provisioner "local-exec" {
+    command = "istioctl install --set profile=default -y --kubeconfig ~/.kube/config"
+  }
+  depends_on = [
+    null_resource.set-kube-config
+  ]
+}
+
+resource "null_resource" "kiali" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+  provisioner "local-exec" {
+    command = "kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.15/samples/addons/kiali.yaml"
+  }
+  depends_on = [
+    null_resource.istio
+  ]
+}
+
+
+
+
+
+
+
+
+
+/*resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "_%@"
+}
+
+data "azurerm_subscription" "current" {
+}
+
+
 resource "kubernetes_namespace" "istio_system" {
-  provider = kubernetes
+  depends_on = [
+    null_resource.set-kube-config
+  ]
+
   metadata {
+    annotations = {
+      name = "example-annotation"
+    }
+
+    labels = {
+      mylabel = "label-value"
+    }
+
     name = "istio-system"
   }
+
 }
 
 resource "kubernetes_secret" "grafana" {
@@ -80,7 +129,7 @@ resource "null_resource" "istio" {
     always_run = "${timestamp()}"
   }
   provisioner "local-exec" {
-    command = "istioctl install --set profile=demo -y"
+    command = "istioctl install --set profile=default -y --kubeconfig ~/.kube/config"
     //command = "istioctl manifest apply -f \".istio/istio-aks.yaml\" --kubeconfig ~/.kube/config"
   }
   depends_on = [kubernetes_secret.grafana, kubernetes_secret.kiali, local_file.istio-config]
@@ -95,4 +144,4 @@ resource "null_resource" "kiali" {
     //command = "istioctl manifest apply -f \".istio/istio-aks.yaml\" --kubeconfig ~/.kube/config"
   }
   depends_on = [kubernetes_secret.grafana, kubernetes_secret.kiali, local_file.istio-config]
-}
+}*/
