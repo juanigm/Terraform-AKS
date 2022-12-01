@@ -5,8 +5,6 @@ resource "local_file" "kube_config" {
 }
 
 
-
-
 resource "null_resource" "set-kube-config" {
   triggers = {
     always_run = "${timestamp()}"
@@ -32,18 +30,23 @@ resource "null_resource" "istio" {
   ]
 }
 
-resource "null_resource" "kiali" {
+resource "null_resource" "addons" {
   triggers = {
     always_run = "${timestamp()}"
   }
   provisioner "local-exec" {
     command = "kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.15/samples/addons/kiali.yaml"
   }
+  provisioner "local-exec" {
+    command = "kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.11/samples/addons/prometheus.yaml"
+  }
+  provisioner "local-exec" {
+    command = "kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.11/samples/addons/grafana.yaml"
+  }
   depends_on = [
     null_resource.istio
   ]
 }
-
 
 
 

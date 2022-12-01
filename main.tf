@@ -1,3 +1,23 @@
+# Azure Provider source and version being used
+terraform {
+  backend "remote" {
+    organization = "My-Organization"
+
+    workspaces {
+      name = "my-test"
+    }
+  }
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
+}
+
+
+
 resource "azurerm_resource_group" "aks-rg" {
   name     = var.resource_group_name
   location = var.location
