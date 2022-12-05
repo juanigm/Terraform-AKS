@@ -1,4 +1,23 @@
 
+# Azure Provider source and version being used
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "terraform-tfstates"
+    storage_account_name = "statestfashe"
+    container_name       = "tfstatedevops"
+    key = "sp=racwd&st=2022-12-05T17:37:30Z&se=2022-12-06T01:37:30Z&spr=https&sv=2021-06-08&sr=c&sig=lhsD4txjB3nsO3AG1jhcL8TzTNQJx%2FVfTWXVyTJ4rss%3D"
+  }
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
+}
+
+
+
 resource "azurerm_resource_group" "aks-rg" {
   name     = var.resource_group_name
   location = var.location
