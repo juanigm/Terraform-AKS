@@ -4,7 +4,7 @@ terraform {
     resource_group_name  = "terraform-tfstates"
     storage_account_name = "statestfashe"
     container_name       = "tfstatedevops"
-    key                  = "sp=racwd&st=2022-12-05T17:37:30Z&se=2022-12-06T01:37:30Z&spr=https&sv=2021-06-08&sr=c&sig=lhsD4txjB3nsO3AG1jhcL8TzTNQJx%2FVfTWXVyTJ4rss%3D"
+    key                  = "prod.terraform.tfstate"
   }
 
   required_providers {
@@ -48,7 +48,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     name                = "system"
     vnet_subnet_id      = azurerm_subnet.subnet.id
     node_count          = var.system_node_count
-    vm_size             = "Standard_D2s_v3"
+    vm_size             = "Standard_DS2_v2"
     type                = "VirtualMachineScaleSets"
     zones               = [1, 2, 3]
     enable_auto_scaling = false
