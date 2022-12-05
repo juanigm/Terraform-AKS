@@ -34,13 +34,13 @@ variable "subnet-name" {
 }
 
 variable "vnet-ip" {
-  type = list(string)
+  type        = list(string)
   description = "List of vnet ip"
-  default = ["192.168.0.0/16"]
+  default     = ["192.168.0.0/16"]
 }
 
 variable "subnet-ip" {
-  type = list(string)
+  type        = list(string)
   description = "List of vnet ip"
-  default = ["192.168.0.0/24"]
+  default     = ["192.168.0.0/24"]
 }

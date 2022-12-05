@@ -28,11 +28,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   default_node_pool {
     name                = "system"
-    vnet_subnet_id = azurerm_subnet.subnet.id
+    vnet_subnet_id      = azurerm_subnet.subnet.id
     node_count          = var.system_node_count
     vm_size             = "Standard_D2s_v3"
     type                = "VirtualMachineScaleSets"
-    zones  = [1, 2, 3]
+    zones               = [1, 2, 3]
     enable_auto_scaling = false
   }
 
