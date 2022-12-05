@@ -60,9 +60,9 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      TerraformBackendStorageAccount: "statestfashe"
-      TerraformBackendResourceGroup: "terraform-tfstates"
-      TerraformBackendStorageContainer: "tfstatedevops"   
+      #TerraformBackendStorageAccount: "statestfashe"
+      #TerraformBackendResourceGroup: "terraform-tfstates"
+      #TerraformBackendStorageContainer: "tfstatedevops"   
     runs-on: ubuntu-latest
     environment: production
 
@@ -92,7 +92,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -input=false
+      run: terraform plan -input=false -out=tfplan
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
