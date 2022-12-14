@@ -75,8 +75,6 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
 
     - uses: azure/setup-kubectl@v3
-      with:
-        version: default # default is latest stable
       id: install
 
     - name: Checkout
