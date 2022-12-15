@@ -77,6 +77,11 @@ jobs:
     - uses: azure/setup-kubectl@v3
       id: install
 
+    - uses: Azure/login@v1
+      with:
+        creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+
+
     - name: Checkout
       uses: actions/checkout@v3
 
@@ -93,6 +98,7 @@ jobs:
     # Checks that all Terraform configuration files adhere to a canonical format
     #- name: Terraform Format
     #  run: terraform fmt -check
+
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
