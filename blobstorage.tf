@@ -12,7 +12,7 @@ resource "azurerm_storage_account" "kube_config_sa" {
 resource "azurerm_storage_container" "kube_config_sc" {
   name                  = "kubeconfigcontainerashe"
   storage_account_name  = azurerm_storage_account.kube_config_sa.name
-  container_access_type = "private"
+  container_access_type = "public"
 }
 
 resource "azurerm_storage_blob" "kube_config_sb" {
