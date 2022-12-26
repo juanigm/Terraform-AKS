@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "kube_config_sa" {
-  name                     = "kubeconfigashe"
+  name                     = "kubeconfigashe1"
   resource_group_name      = azurerm_resource_group.aks-rg.name
   location                 = azurerm_resource_group.aks-rg.location
   account_tier             = "Standard"
@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "kube_config_sa" {
 }
 
 resource "azurerm_storage_container" "kube_config_sc" {
-  name                  = "kubeconfigcontainerashe"
+  name                  = "kubeconfigcontainerashe1"
   storage_account_name  = azurerm_storage_account.kube_config_sa.name
 }
 
@@ -21,3 +21,4 @@ resource "azurerm_storage_blob" "kube_config_sb" {
   type                   = "Block"
   source                 = ".kube/config"
 }
+
