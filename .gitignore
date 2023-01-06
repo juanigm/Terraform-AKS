@@ -29,3 +29,6 @@ override.tf.json
 # example: *tfplan*
 
 **/.kube/*
+
+01-pod.yaml
+ubutnu.yaml
