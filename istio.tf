@@ -43,6 +43,9 @@ resource "null_resource" "addons" {
   provisioner "local-exec" {
     command = "kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.11/samples/addons/grafana.yaml"
   }
+  provisioner "local-exec" {
+    command = "kubectl label namespace default istio-injection=enabled"
+  }
   depends_on = [
     null_resource.istio
   ]
