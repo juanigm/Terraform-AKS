@@ -1,4 +1,3 @@
-
 # Azure Provider source and version being used
 terraform {
   backend "azurerm" {
