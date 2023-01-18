@@ -19,6 +19,7 @@ resource "aws_iam_role" "eks-iam-role" {
 EOF
 }
 
+
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
  role    = aws_iam_role.eks-iam-role.name
@@ -27,7 +28,6 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly-EK
  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
  role    = aws_iam_role.eks-iam-role.name
 }
-
 
 
 resource "aws_iam_role" "eks-node-group-iam-role" {
@@ -45,6 +45,12 @@ resource "aws_iam_role" "eks-node-group-iam-role" {
   })
 }
 
+
+resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicyNodeGroup" {
+ policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+ role    = aws_iam_role.eks-node-group-iam-role.name
+}
+
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.eks-node-group-iam-role.name
@@ -59,3 +65,5 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.eks-node-group-iam-role.name
 }
+
+

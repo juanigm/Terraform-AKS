@@ -32,5 +32,3 @@ override.tf.json
 **/K8S-UTILS/*
 **/S3/*
 **/VPC/*
-
-*.terraform.lock.hcl

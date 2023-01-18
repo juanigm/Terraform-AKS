@@ -1,9 +1,12 @@
-/*resource "aws_eks_cluster" "eks-cluster" {
-  name     = var.eks_name
+data "aws_caller_identity" "current" {}
+
+resource "aws_eks_cluster" "eks-cluster" {
+  name     = "eks-${random_string.random.result}"
   role_arn = aws_iam_role.eks-iam-role.arn
+  version = 1.24
 
   vpc_config {
-    subnet_ids = module.vpc.private_subnets
+    subnet_ids = module.vpc.public_subnets
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
@@ -12,20 +15,23 @@
     aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly-EKS,
   ]
+
 }
 
 
 resource "aws_eks_node_group" "eks-cluster-node-groups" {
   cluster_name    = aws_eks_cluster.eks-cluster.name
   node_group_name = var.node_group_name
-  node_role_arn   = aws_iam_role.eks-node-group-iam-role.name
-  subnet_ids      = module.vpc.private_subnets
+  node_role_arn   = aws_iam_role.eks-node-group-iam-role.arn
+  subnet_ids      = module.vpc.public_subnets
+  
+  
 
-  instance_types = [ "t2.micro" ]
+  instance_types = [ "t3.medium" ]
 
   scaling_config {
     desired_size = 1
-    max_size     = 2
+    max_size     = 1
     min_size     = 1
   }
 
@@ -39,11 +45,11 @@ resource "aws_eks_node_group" "eks-cluster-node-groups" {
     aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
   ]
+
 }
-
-
-*/
 
 
 

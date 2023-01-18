@@ -2,10 +2,12 @@
 // $ export AWS_SECRET_ACCESS_KEY="asecretkey"
 // $ export AWS_REGION="region"
 
+
+
 terraform {
 
     backend "s3" {
-        bucket = "mybucketashe"
+        bucket = "mybucketashe1"
         key    = "stateus"
         region = "us-east-1"
     }
@@ -16,9 +18,26 @@ terraform {
       version = "~> 4.0"
     }
   }
+
 }
 
 # Configure the AWS Provider
+
+
 provider "aws" {
   region = "us-east-1"
+
+  default_tags {
+    tags = {
+      owner = "test"
+      environment        = "dev"
+    }
+  }
+
+}
+
+resource "random_string" "random" {
+  length           = 5
+  special          = false
+  upper            = false
 }

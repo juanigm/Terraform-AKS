@@ -24,3 +24,18 @@ variable "nodeGroup_Role_Name" {
   description = "Name of node group iam role"
   default = "eks-node-group-example"
 }
+
+variable "vpc_cidr" {
+  type = string
+  description = "VPC IP"
+}
+
+variable "public_subnets_cidr" {
+  type        = list
+  description = "The CIDR block for the public subnets"
+}
+
+variable "private_subnets_cidr" {
+  type        = list
+  description = "The CIDR block for the private subnets"
+}
