@@ -14,7 +14,9 @@ resource "aws_eks_cluster" "eks-cluster" {
   depends_on = [
     aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly-EKS,
+    null_resource.clean-sg,
   ]
+  
 
 }
 
