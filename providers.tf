@@ -3,8 +3,8 @@
 # Azure Provider source and version being used
 terraform {
   backend "azurerm" {
-    resource_group_name  = "terraform-tfstates"
-    storage_account_name = "statestfashe"
+    resource_group_name  = "terraform-tfstates2"
+    storage_account_name = "statestfashe2"
     container_name       = "tfstatedevops"
     key                  = "prod.terraform.tfstate"
   } 
